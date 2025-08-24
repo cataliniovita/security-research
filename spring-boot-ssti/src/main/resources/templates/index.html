@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SSTI DEMO</title>
+  </head>
+  <body>
+    <h1 th:text="@{'/login?redirectAfterLogin=__${Referer}__'}"></h1>
+    <p>Intentionally vulnerable reflection of the Referer header via double evaluation.</p>
+  </body>
+  </html>
+
+
