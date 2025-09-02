@@ -23,6 +23,9 @@ public class CookieController {
         for (Cookie c : cookies) {
             sb.append(c.getName()).append("=").append(c.getValue()).append("\n");
         }
+
+        response.addCookie(cookies[0]);
+
         return sb.toString();
     }
 
