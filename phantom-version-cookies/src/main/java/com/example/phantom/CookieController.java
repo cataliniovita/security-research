@@ -24,7 +24,23 @@ public class CookieController {
             sb.append(c.getName()).append("=").append(c.getValue()).append("\n");
         }
 
-        response.addCookie(cookies[0]);
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                Cookie newCookie = new Cookie(cookie.getName(), cookie.getValue());
+
+                if (cookie.getPath() != null) {
+                    newCookie.setPath(cookie.getPath());
+                }
+                if (cookie.getDomain() != null) {
+                    newCookie.setDomain(cookie.getDomain());
+                }
+                newCookie.setMaxAge(cookie.getMaxAge());
+                newCookie.setSecure(cookie.getSecure());
+                newCookie.setHttpOnly(cookie.isHttpOnly());
+
+                response.addCookie(newCookie);
+            }
+        }
 
         return sb.toString();
     }
