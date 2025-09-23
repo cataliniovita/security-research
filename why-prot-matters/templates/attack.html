@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Attack Demo</h2>
+<p>This link uses a custom protocol that still passes the vulnerable origin check:</p>
+<p><a href="{{ auth_url }}">Trigger auth with web+slonser://z.chromiumapp.org</a></p>
+{% endblock %}
